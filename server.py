@@ -14,7 +14,7 @@ app = FastAPI(
     description="Lightweight backend API evaluating citizen complaints against ward-level infrastructure constraints."
 )
 
-DATABASE_URL = os.environ.get("DATABASE_URL")
+DATABASE_URL = os.environ.get("DATABASE_URL", "").strip()
 
 def get_db_connection():
     conn = psycopg2.connect(DATABASE_URL)
