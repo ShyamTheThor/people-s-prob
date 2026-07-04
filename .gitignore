@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Local database files
+complaints.db
+complaints_db.json
+
+# Environment variables
+.env
+.env.local
+
+# macOS
+.DS_Store
