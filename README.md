@@ -183,9 +183,9 @@ Open **http://127.0.0.1:8000** in your browser.
 
 | Ward | Budget | Hospital Distance | Population Density |
 |---|---|---|---|
-| Ward A (Downtown) | $50,000 | 1.2 km | 8,500/km² |
-| Ward B (Suburbs) | $12,000 | 8.5 km | 1,200/km² |
-| Ward C (Rural Fringe) | $3,000 | 18.0 km | 350/km² |
+| Ward A (Downtown) | ₹40,00,000 | 1.2 km | 8,500/km² |
+| Ward B (Suburbs) | ₹10,00,000 | 8.5 km | 1,200/km² |
+| Ward C (Rural Fringe) | ₹2,50,000 | 18.0 km | 350/km² |
 
 ---
 

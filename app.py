@@ -33,17 +33,17 @@ class RankResult(TypedDict):
 # Mock public dataset representing infrastructure constraints for three fictional wards
 MOCK_WARD_CONSTRAINTS: Dict[str, WardConstraint] = {
     "Ward A (Downtown)": {
-        "remaining_budget": 50000.0,
+        "remaining_budget": 4000000.0,
         "distance_to_nearest_hospital_km": 1.2,
         "population_density": 8500.0
     },
     "Ward B (Suburbs)": {
-        "remaining_budget": 12000.0,
+        "remaining_budget": 1000000.0,
         "distance_to_nearest_hospital_km": 8.5,
         "population_density": 1200.0
     },
     "Ward C (Rural Fringe)": {
-        "remaining_budget": 3000.0,
+        "remaining_budget": 250000.0,
         "distance_to_nearest_hospital_km": 18.0,
         "population_density": 350.0
     }
@@ -51,11 +51,11 @@ MOCK_WARD_CONSTRAINTS: Dict[str, WardConstraint] = {
 
 # Estimated cost of resolving issues in each category (used for hard budget constraint check)
 ESTIMATED_REPAIR_COSTS: Dict[str, float] = {
-    "Education": 10000.0,
-    "Healthcare": 15000.0,
-    "Roads & Infrastructure": 20000.0,
-    "Water Supply": 5000.0,
-    "Other": 2000.0
+    "Education": 800000.0,
+    "Healthcare": 1200000.0,
+    "Roads & Infrastructure": 1600000.0,
+    "Water Supply": 400000.0,
+    "Other": 150000.0
 }
 
 # =====================================================================
@@ -180,8 +180,8 @@ def rank_priority_works(complaint_data: dict, local_constraints: Dict[str, WardC
     
     if remaining_budget < estimated_cost and not is_emergency:
         reasoning_steps.append(
-            f"DISQUALIFIED: Estimated repair cost (${estimated_cost:,.2f}) "
-            f"exceeds remaining ward budget (${remaining_budget:,.2f})."
+            f"DISQUALIFIED: Estimated repair cost (₹{estimated_cost:,.0f}) "
+            f"exceeds remaining ward budget (₹{remaining_budget:,.0f})."
         )
         return {
             "priority_score": 0.0,
@@ -191,7 +191,7 @@ def rank_priority_works(complaint_data: dict, local_constraints: Dict[str, WardC
         }
     elif remaining_budget < estimated_cost and is_emergency:
         reasoning_steps.append(
-            f"EMERGENCY OVERRIDE: Estimated cost (${estimated_cost:,.2f}) exceeds remaining budget (${remaining_budget:,.2f}), "
+            f"EMERGENCY OVERRIDE: Estimated cost (₹{estimated_cost:,.0f}) exceeds remaining budget (₹{remaining_budget:,.0f}), "
             "but critical emergency status bypasses budget restriction."
         )
         
@@ -244,7 +244,7 @@ def rank_priority_works(complaint_data: dict, local_constraints: Dict[str, WardC
     else:
         recommended_action = "Routine Backlog"
         
-    reasoning_steps.append(f"Budget verified: remaining budget ${remaining_budget:,.2f} is sufficient.")
+    reasoning_steps.append(f"Budget verified: remaining budget ₹{remaining_budget:,.0f} is sufficient.")
     
     return {
         "priority_score": final_score,

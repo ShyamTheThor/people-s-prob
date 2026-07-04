@@ -157,21 +157,21 @@
                 <div class="grid grid-cols-3 gap-3 mt-4">
                     <div class="p-3 rounded-xl border border-slate-800 bg-slate-900/30 cursor-pointer transition-all hover:bg-slate-900/60" id="card-ward-a" onclick="highlightWard('Ward A (Downtown)')">
                         <div class="text-xs font-bold text-violet-400 uppercase tracking-wider">Ward A (Downtown)</div>
-                        <div class="text-lg font-bold text-slate-200 mt-1" id="val-a-budget">$50K</div>
+                        <div class="text-lg font-bold text-slate-200 mt-1" id="val-a-budget">₹40L</div>
                         <div class="text-[10px] text-slate-400 mt-0.5">Hospital: 1.2 km</div>
                         <div class="text-[10px] text-slate-400">Density: 8,500/km²</div>
                         <div class="text-xs font-semibold text-indigo-300 mt-1.5" id="val-a-count">0 complaints</div>
                     </div>
                     <div class="p-3 rounded-xl border border-slate-800 bg-slate-900/30 cursor-pointer transition-all hover:bg-slate-900/60" id="card-ward-b" onclick="highlightWard('Ward B (Suburbs)')">
                         <div class="text-xs font-bold text-violet-400 uppercase tracking-wider">Ward B (Suburbs)</div>
-                        <div class="text-lg font-bold text-slate-200 mt-1" id="val-b-budget">$12K</div>
+                        <div class="text-lg font-bold text-slate-200 mt-1" id="val-b-budget">₹10L</div>
                         <div class="text-[10px] text-slate-400 mt-0.5">Hospital: 8.5 km</div>
                         <div class="text-[10px] text-slate-400">Density: 1,200/km²</div>
                         <div class="text-xs font-semibold text-indigo-300 mt-1.5" id="val-b-count">0 complaints</div>
                     </div>
                     <div class="p-3 rounded-xl border border-slate-800 bg-slate-900/30 cursor-pointer transition-all hover:bg-slate-900/60" id="card-ward-c" onclick="highlightWard('Ward C (Rural Fringe)')">
                         <div class="text-xs font-bold text-violet-400 uppercase tracking-wider">Ward C (Rural)</div>
-                        <div class="text-lg font-bold text-slate-200 mt-1" id="val-c-budget">$3K</div>
+                        <div class="text-lg font-bold text-slate-200 mt-1" id="val-c-budget">₹2.5L</div>
                         <div class="text-[10px] text-slate-400 mt-0.5">Hospital: 18.0 km</div>
                         <div class="text-[10px] text-slate-400">Density: 350/km²</div>
                         <div class="text-xs font-semibold text-indigo-300 mt-1.5" id="val-c-count">0 complaints</div>
@@ -252,17 +252,17 @@
     <script>
         const MOCK_WARD_CONSTRAINTS = {
             "Ward A (Downtown)": {
-                remaining_budget: 50000.0,
+                remaining_budget: 4000000.0,
                 distance_to_nearest_hospital_km: 1.2,
                 population_density: 8500.0
             },
             "Ward B (Suburbs)": {
-                remaining_budget: 12000.0,
+                remaining_budget: 1000000.0,
                 distance_to_nearest_hospital_km: 8.5,
                 population_density: 1200.0
             },
             "Ward C (Rural Fringe)": {
-                remaining_budget: 3000.0,
+                remaining_budget: 250000.0,
                 distance_to_nearest_hospital_km: 18.0,
                 population_density: 350.0
             }
@@ -481,7 +481,7 @@
             if (info) {
                 overlay.innerHTML = `
                     <div class="font-bold text-violet-400">${wardName}</div>
-                    <div>Remaining Budget: <b>$${info.remaining_budget.toLocaleString()}</b></div>
+                    <div>Remaining Budget: <b>₹${info.remaining_budget.toLocaleString('en-IN')}</b></div>
                     <div>Dist. to Hospital: <b>${info.distance_to_nearest_hospital_km} km</b></div>
                     <div>Density: <b>${info.population_density.toLocaleString()}/km²</b></div>
                 `;
@@ -551,13 +551,13 @@
 
                     // Budget Impact calculations
                     const ESTIMATED_REPAIR_COSTS = {
-                        "Education": 10000.0,
-                        "Healthcare": 15000.0,
-                        "Roads & Infrastructure": 20000.0,
-                        "Water Supply": 5000.0,
-                        "Other": 2000.0
+                        "Education": 800000.0,
+                        "Healthcare": 1200000.0,
+                        "Roads & Infrastructure": 1600000.0,
+                        "Water Supply": 400000.0,
+                        "Other": 150000.0
                     };
-                    const cost = ESTIMATED_REPAIR_COSTS[item.category] || 2000.0;
+                    const cost = ESTIMATED_REPAIR_COSTS[item.category] || 150000.0;
                     const wardInfo = MOCK_WARD_CONSTRAINTS[item.ward_evaluated] || { remaining_budget: 10000.0 };
                     const budget = wardInfo.remaining_budget;
                     const percent = Math.min(100, (cost / budget) * 100);
@@ -568,7 +568,7 @@
                             <div class="mt-2 text-[10px]">
                                 <div class="flex justify-between text-rose-400 font-semibold mb-1">
                                     <span>Budget Impact:</span>
-                                    <span>Exceeds Budget (Est: $${cost.toLocaleString()} / Ward Cap: $${budget.toLocaleString()})</span>
+                                    <span>Exceeds Budget (Est: ₹${cost.toLocaleString('en-IN')} / Ward Cap: ₹${budget.toLocaleString('en-IN')})</span>
                                 </div>
                                 <div class="w-full bg-slate-900 rounded-full h-1 border border-slate-800/80 overflow-hidden">
                                     <div class="bg-rose-500 h-1 rounded-full w-full"></div>
@@ -579,7 +579,7 @@
                         budgetImpactHtml = `
                             <div class="mt-2 text-[10px]">
                                 <div class="flex justify-between text-slate-400 mb-1">
-                                    <span>Budget Impact (Est: $${cost.toLocaleString()}):</span>
+                                    <span>Budget Impact (Est: ₹${cost.toLocaleString('en-IN')}):</span>
                                     <span class="font-semibold text-slate-300">${percent.toFixed(0)}% of Ward Budget</span>
                                 </div>
                                 <div class="w-full bg-slate-900 rounded-full h-1 border border-slate-800/80 overflow-hidden">
